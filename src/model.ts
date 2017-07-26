@@ -1,8 +1,5 @@
 import { Validators } from './validators';
 
-export type ValidationConfig = {
-  errorMapping: ErrorMapping
-};
 export type ValidationResolverConfig<K extends keyof Validators> = {
   errorMessages: ErrorMessages<K>
 };
