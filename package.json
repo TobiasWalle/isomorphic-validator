@@ -1,0 +1,9 @@
+{
+  "name": "isomorphic-validator",
+  "version": "1.0.0",
+  "description": "Share the form validation on the server and client",
+  "main": "index.js",
+  "repository": "git@github.com:TobiasWalle/isomorphic-validator.git",
+  "author": "Tobias Walle",
+  "license": "MIT"
+}
