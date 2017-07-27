@@ -41,10 +41,8 @@ describe('CreateValueValidator', () => {
   it('should work with empty schema', () => {
     type Keys = 'a' | 'b';
     const schema: ValueSchemaMapping<Keys> = {
-      a: {
-      },
-      b: {
-      },
+      a: {},
+      b: {},
     };
     const result = valueValidator(schema)({
       a: 10,
