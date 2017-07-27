@@ -1,6 +1,8 @@
 import { createValueValidator, ValueSchemaMapping, ValueValidatorConfig } from './create-value-validator';
+import { DeepPartial } from './types/deep-partial';
+
 describe('CreateValueValidator', () => {
-  const config: ValueValidatorConfig = {
+  const config: DeepPartial<ValueValidatorConfig> = {
     errorMapping: {
       required: {
         notDefined: 'notDefined'
@@ -33,7 +35,7 @@ describe('CreateValueValidator', () => {
     });
     expect(result).toEqual({
       b: {
-        inRange: config.errorMapping.inRange.overMax
+        inRange: 'overMax'
       }
     });
   });

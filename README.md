@@ -10,7 +10,7 @@ import { ValidationSchemaMapping } from 'isomorphic-validator';
 const validationSchema: ValidationSchemaMapping<keyof MyObject> = {
   username: {
     required: {},
-    limitLength: {
+    hasLength: {
       min: 8,
       max: 30
     }
@@ -44,9 +44,9 @@ const config: ValueValidatorConfig = {
     required: {
       notDefined: 'This field is required'
     },
-    limitLength: {
-      underMin: ({params: {min}}) => `The minimal length is ${min}`,
-      overMax: ({params: {max}}) => `The maximum length is ${max}`
+    hasLength: {
+      shorter: ({params: {min}}) => `The minimal length is ${min}`,
+      longer: ({params: {max}}) => `The maximum length is ${max}`
     },
     isEmail: {
       notValid: 'The email is not valid'
@@ -67,7 +67,7 @@ const errors = valueValidator(myObject);
 Returns:
 {
   username: {
-    limitLength: 'The minimal length is 8',
+    hasLength: 'The minimal length is 8',
   },
   email: {
     isEmail: 'The email is not valid',

@@ -1,6 +1,9 @@
 import { ErrorMapping, ValidationResolverConfig, ValidationResolverCreator, ValidationSchema } from './model';
 import { Validators } from './validators';
 import { VALIDATION_RESOLVERS } from './resolvers';
+import { defaultValueValidatorConfig } from './default-value-validator-config';
+import deepmerge = require('deepmerge');
+import { DeepPartial } from './types/deep-partial';
 
 export type ValueValidatorConfig = {
   errorMapping: ErrorMapping
@@ -33,18 +36,19 @@ const getResolverConfig = <K extends keyof Validators>(config: ValueValidatorCon
 };
 
 export const createValueValidator =
-  (config: ValueValidatorConfig) =>
-    <K extends string>(schemaMapping: ValueSchemaMapping<K>) =>
-      (obj: {[key in K]: any}): ValidationResultMapping<K> => (
+  (config: DeepPartial<ValueValidatorConfig>) => {
+    const configuration = deepmerge(defaultValueValidatorConfig, config) as ValueValidatorConfig;
+    return <K extends string>(schemaMapping: ValueSchemaMapping<K>) =>
+      (obj: {[key in K]: any}): ValidationResultMapping<K> =>
         Object.keys(obj)
           .map(key => [key, obj[key], schemaMapping[key]])
           .filter(([key, value, schema]) => schema != null)
           .reduce((result: ValidationResultMapping<K>, [key, value, schema]) => {
-            const schemaResult = validateSchema(config, value, schema);
+            const schemaResult = validateSchema(configuration, value, schema);
             if (Object.keys(schemaResult).length > 0) {
               result[key] = schemaResult;
             }
             return result;
-          }, {})
-      );
-
+          }, {});
+  }
+;

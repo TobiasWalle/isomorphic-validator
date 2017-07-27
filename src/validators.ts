@@ -12,4 +12,22 @@ export interface Validators {
     params: {},
     cases: 'notDefined'
   };
+  isEmail: {
+    inputType: string | undefined | null,
+    params: {},
+    cases: 'notValid'
+  };
+  isNumber: {
+    inputType: number | undefined | null,
+    params: {},
+    cases: 'notValid'
+  };
+  hasLength: {
+    inputType: string | undefined | null,
+    params: {
+      min: number,
+      max: number,
+    },
+    cases: 'shorter' | 'longer'
+  };
 }
