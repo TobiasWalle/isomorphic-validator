@@ -15,4 +15,4 @@ script:
   - yarn lint
   - yarn test -- --coverage
   - yarn build
-  - yarb coveralls
+  - yarn coveralls
