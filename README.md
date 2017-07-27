@@ -1,6 +1,7 @@
 # Isomorphic Validator
 [![Build Status](https://travis-ci.org/TobiasWalle/isomorphic-validator.svg?branch=master)](https://travis-ci.org/TobiasWalle/isomorphic-validator)
 [![Coverage Status](https://coveralls.io/repos/github/TobiasWalle/isomorphic-validator/badge.svg?branch=master)](https://coveralls.io/github/TobiasWalle/isomorphic-validator?branch=master)
+[![npm version](https://badge.fury.io/js/isomorphic-validator.svg)](https://badge.fury.io/js/isomorphic-validator)
 
 🚀 Share your form validator between client and server
 
