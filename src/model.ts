@@ -5,7 +5,7 @@ export type ValidationResolverConfig<K extends keyof Validators> = {
 };
 
 export type ValidationResolver<K extends keyof Validators> =
-  (params: Validators[K]['params']) => (value: Validators[K]['inputType']) => string | undefined;
+  (params: Validators[K]['params']) => (value: Validators[K]['inputType']) => string | null;
 
 export type ValidationResolverCreator<K extends keyof Validators> =
   (config: ValidationResolverConfig<K>) => ValidationResolver<K>;

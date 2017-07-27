@@ -5,16 +5,15 @@ export const VALIDATION_RESOLVERS: ValidationResolvers = {
     if (value == null) {
       return errorMessages.notDefined;
     }
-    return undefined;
+    return null;
   },
   inRange: ({errorMessages}) => ({min, max}) => (value) => {
-    if (value == null) return undefined;
+    if (value == null) return null;
     if (value < min) {
       return errorMessages.underMin;
     } else if (value > max) {
       return errorMessages.overMax;
-    } else {
-      return undefined;
     }
+    return null;
   }
 };

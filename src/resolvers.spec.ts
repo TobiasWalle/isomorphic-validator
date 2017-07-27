@@ -13,10 +13,10 @@ describe('Resolvers', () => {
     });
 
     it('should return undefined if value is valid', () => {
-      expect(required(123)).toBeUndefined();
-      expect(required(0)).toBeUndefined();
-      expect(required('123')).toBeUndefined();
-      expect(required(false)).toBeUndefined();
+      expect(required(123)).toBeNull();
+      expect(required(0)).toBeNull();
+      expect(required('123')).toBeNull();
+      expect(required(false)).toBeNull();
     });
   });
 
@@ -31,12 +31,12 @@ describe('Resolvers', () => {
     });
 
     it('should return undefined if value is in range or null', () => {
-      expect(inRange(5)).toBeUndefined();
-      expect(inRange(-10)).toBeUndefined();
-      expect(inRange(10)).toBeUndefined();
-      expect(inRange(0)).toBeUndefined();
-      expect(inRange(null)).toBeUndefined();
-      expect(inRange(undefined)).toBeUndefined();
+      expect(inRange(5)).toBeNull();
+      expect(inRange(-10)).toBeNull();
+      expect(inRange(10)).toBeNull();
+      expect(inRange(0)).toBeNull();
+      expect(inRange(null)).toBeNull();
+      expect(inRange(undefined)).toBeNull();
     });
 
     it('should return error if not in range', () => {
