@@ -15,9 +15,7 @@ export type ValidationResolvers = {
 };
 
 export type ValidationSchema = {
-  [key in keyof Validators]?: {
-    params: Validators[key]['params']
-  }
+  [key in keyof Validators]?: Validators[key]['params']
 };
 
 export type Cases<K extends keyof Validators> = Validators[K]['cases'];

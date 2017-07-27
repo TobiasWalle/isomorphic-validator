@@ -5,19 +5,22 @@ import { VALIDATION_RESOLVERS } from './resolvers';
 export type ValueValidatorConfig = {
   errorMapping: ErrorMapping
 };
-export type ValueSchemaMapping<T> = {[K in keyof T]?: ValidationSchema};
+export type ValueSchemaMapping<K extends string> = {[key in K]?: ValidationSchema};
 export type ValidationResult = {[V in keyof Validators]?:  string | undefined};
-export type ValidationResultMapping<T> = {[K in keyof T]?: ValidationResult};
+export type ValidationResultMapping<K extends string> = {[key in K]?: ValidationResult};
 
 export const createValueValidator =
   (config: ValueValidatorConfig) =>
-    <T extends { [key: string]: any }>(schemaMapping: ValueSchemaMapping<T>) =>
-      (obj: T): ValidationResultMapping<T> => (
+    <K extends string>(schemaMapping: ValueSchemaMapping<K>) =>
+      (obj: {[key in K]: any}): ValidationResultMapping<K> => (
         Object.keys(obj)
           .map(key => [key, obj[key], schemaMapping[key]])
           .filter(([key, value, schema]) => schema != null)
-          .reduce((result: ValidationResultMapping<T>, [key, value, schema]) => {
-            result[key] = validateSchema(config, value, schema);
+          .reduce((result: ValidationResultMapping<K>, [key, value, schema]) => {
+            const schemaResult = validateSchema(config, value, schema);
+            if (Object.keys(schemaResult).length > 0) {
+              result[key] = schemaResult;
+            }
             return result;
           }, {})
       );
@@ -26,10 +29,13 @@ const validateSchema = (config: ValueValidatorConfig, value: any, schema: Valida
   return Object.keys(schema)
     .reduce((result: Partial<ValidationResult>, key: keyof Validators) => {
       const resolverConfig = getResolverConfig(config, key);
-      const resolverSchema = schema[key];
-      if (!resolverSchema) return result;
+      const params = schema[key];
+      if (!params) return result;
       const validationResolverCreator: ValidationResolverCreator<typeof key> = VALIDATION_RESOLVERS[key];
-      result[key] = validationResolverCreator(resolverConfig)(resolverSchema.params)(value);
+      const itemResult = validationResolverCreator(resolverConfig)(params)(value);
+      if (itemResult != null) {
+        result[key] = itemResult;
+      }
       return result;
     }, {});
 };
