@@ -11,29 +11,45 @@ describe('CreateValueValidator', () => {
       }
     }
   };
-  type Keys = 'a' | 'b';
-  const schema: ValueSchemaMapping<Keys> = {
-    a: {
-      required: {}
-    },
-    b: {
-      required: {},
-      inRange: {
-        min: 0,
-        max: 10
-      }
-    },
-  };
-  const valueValidator = createValueValidator(config)(schema);
+  const valueValidator = createValueValidator(config);
+
   it('should find and return errors', () => {
-    const result = valueValidator({
+    type Keys = 'a' | 'b';
+    const schema: ValueSchemaMapping<Keys> = {
+      a: {
+        required: {}
+      },
+      b: {
+        required: {},
+        inRange: {
+          min: 0,
+          max: 10
+        }
+      },
+    };
+    const result = valueValidator(schema)({
       a: 10,
       b: 300,
     });
     expect(result).toEqual({
-      b {
+      b: {
         inRange: config.errorMapping.inRange.overMax
       }
     });
+  });
+
+  it('should work with empty schema', () => {
+    type Keys = 'a' | 'b';
+    const schema: ValueSchemaMapping<Keys> = {
+      a: {
+      },
+      b: {
+      },
+    };
+    const result = valueValidator(schema)({
+      a: 10,
+      b: 300,
+    });
+    expect(result).toEqual({});
   });
 });
