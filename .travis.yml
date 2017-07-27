@@ -9,7 +9,7 @@ before_install:
   - npm install -g yarn@latest
 
 install:
-  - yarn
+  - yarn install
 
 script:
   - yarn lint
