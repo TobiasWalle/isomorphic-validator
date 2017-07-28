@@ -3,12 +3,18 @@
 [![Coverage Status](https://coveralls.io/repos/github/TobiasWalle/isomorphic-validator/badge.svg?branch=master)](https://coveralls.io/github/TobiasWalle/isomorphic-validator?branch=master)
 [![npm version](https://badge.fury.io/js/isomorphic-validator.svg)](https://badge.fury.io/js/isomorphic-validator)
 
-🚀 Share your form validator between client and server
+:rocket: Share your form validator between client and server
 
 **1. Define your validation schema**
 
 ```typescript
 import { ValidationSchemaMapping } from 'isomorphic-validator';
+
+type MyObject = {
+  username: string,
+  email: string,
+  age: number
+}
 
 const validationSchema: ValidationSchemaMapping<keyof MyObject> = {
   username: {
@@ -65,21 +71,24 @@ const config: ValueValidatorConfig = {
 }
 
 const valueValidator = createValueValidator(config)(schema);
-const errors = valueValidator(myObject);
-/*
-Returns:
-{
-  username: {
-    hasLength: 'The minimal length is 8',
-  },
-  email: {
-    isEmail: 'The email is not valid',
-  },
-  age: {
-    inRange: 'The age has to be at least 0'
-  }
-}
- */
+valueValidator(myObject)
+  .then((errors) => {
+    /*
+    errors equals:
+    {
+      username: {
+        hasLength: 'The minimal length is 8',
+      },
+      email: {
+        isEmail: 'The email is not valid',
+      },
+      age: {
+        inRange: 'The age has to be at least 0'
+      }
+    }
+     */
+  })
+;
 ```
 
 **3. Share**
