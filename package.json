@@ -1,6 +1,6 @@
 {
   "name": "isomorphic-validator",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Share the form validation on the server and client",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
