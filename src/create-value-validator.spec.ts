@@ -1,6 +1,6 @@
 import {
-  PartialValueValidatorConfig,
   createValueValidator,
+  PartialValueValidatorConfig,
   ValueSchemaMapping,
   ValueValidatorWithoutSchema
 } from './create-value-validator';

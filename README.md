@@ -8,7 +8,7 @@
 **1. Define your validation schema**
 
 ```typescript
-import { ValidationSchemaMapping } from 'isomorphic-validator';
+import { ValueSchemaMapping } from 'isomorphic-validator';
 
 type MyObject = {
   username: string,
@@ -16,7 +16,7 @@ type MyObject = {
   age: number
 }
 
-const validationSchema: ValidationSchemaMapping<keyof MyObject> = {
+const validationSchema: ValueSchemaMapping<keyof MyObject> = {
   username: {
     required: {},
     hasLength: {
@@ -39,7 +39,7 @@ const validationSchema: ValidationSchemaMapping<keyof MyObject> = {
 
 **2. Validate**
 ```typescript
-import { createValueValidator, ValueValidatorConfig } from 'isomorphic-validator';
+import { createValueValidator, PartialValueValidatorConfig } from 'isomorphic-validator';
 
 const myObject: MyObject = {
   username: 'user',
@@ -48,7 +48,7 @@ const myObject: MyObject = {
 }
 
 // Create config or just leave empty to use defaults
-const config: ValueValidatorConfig = {
+const config: PartialValueValidatorConfig = {
   errorMapping: {
     required: {
       notDefined: 'This field is required'

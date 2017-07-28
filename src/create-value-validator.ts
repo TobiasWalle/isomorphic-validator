@@ -1,11 +1,9 @@
 import {
-  ValidationTarget,
-  ErrorMessageFunction,
-  ErrorMapping,
   ValidationResolverConfig,
   ValidationResolverCreator,
-  ValidationSchema
 } from './model';
+import { ErrorMapping, ErrorMessageFunction, ValidationTarget } from './error-mapping';
+import { ValidationSchema } from './validation-schema';
 import { Validators } from './validators';
 import { VALIDATION_RESOLVERS } from './resolvers';
 import { defaultValueValidatorConfig } from './default-value-validator-config';

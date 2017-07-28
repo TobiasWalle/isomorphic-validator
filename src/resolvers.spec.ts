@@ -1,5 +1,6 @@
-import { ErrorMessages } from './model';
 import { VALIDATION_RESOLVERS } from './resolvers';
+import { ErrorMessages } from './error-mapping';
+
 describe('Resolvers', () => {
   describe('required', () => {
     const errorMessages: ErrorMessages<'required', {}> = {

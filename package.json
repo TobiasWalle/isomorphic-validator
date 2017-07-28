@@ -4,6 +4,9 @@
   "description": "Share the form validation on the server and client",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "./dist"
+  ],
   "repository": "git@github.com:TobiasWalle/isomorphic-validator.git",
   "author": "Tobias Walle",
   "license": "MIT",
