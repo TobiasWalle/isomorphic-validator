@@ -2,10 +2,10 @@
   "name": "isomorphic-validator",
   "version": "1.1.2",
   "description": "Share the form validation on the server and client",
-  "main": "dist/index.js",
-  "types": "dist/index",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "./dist"
   ],
   "repository": "git@github.com:TobiasWalle/isomorphic-validator.git",
   "author": "Tobias Walle",
@@ -15,7 +15,8 @@
     "lint": "tslint -c ./tslint.json --type-check --project ./tsconfig.json",
     "test": "jest --runInBand",
     "test:watch": "jest --runInBand --watch",
-    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p tsconfig.json",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
   "jest": {
@@ -39,6 +40,7 @@
     "@types/jest": "^20.0.5",
     "coveralls": "^2.13.1",
     "jest": "^20.0.4",
+    "rimraf": "^2.6.1",
     "ts-jest": "^20.0.7",
     "tslint": "^5.5.0",
     "typescript": "^2.4.2"
