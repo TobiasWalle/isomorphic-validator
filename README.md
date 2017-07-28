@@ -5,8 +5,6 @@
 
 :rocket: Share your form validator between client and server
 
-*It is recommended to use this library with [typescript](https://www.typescriptlang.org/). But the usage with javascript is also possible.*
-
 **1. Define your validation schema**
 
 ```typescript
@@ -98,10 +96,12 @@ valueValidator(myObject)
 As the schema is serializable you can easily share it between the client and the server.
 Isomorphic makes no restrictions which technology you use for that.
 
+*It is recommended to use this library with [typescript](https://www.typescriptlang.org/). But the usage with javascript is also possible.*
+
 ## API
 
 You can find all possible validations in [validators.ts](src/validators.ts).
-The  structure of the definitions are the following:
+The structure of the definitions is the following:
 
 |Property|Description|
 |:---------:|:-------------|
