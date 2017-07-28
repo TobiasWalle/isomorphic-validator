@@ -1,12 +1,9 @@
-import { ErrorMessageFunction } from './model';
 import {
   PartialValueValidatorConfig,
   createValueValidator,
   ValueSchemaMapping,
-  ValueValidatorConfig,
   ValueValidatorWithoutSchema
 } from './create-value-validator';
-import { DeepPartial } from './types/deep-partial';
 
 describe('CreateValueValidator', () => {
   let config: PartialValueValidatorConfig<{}>;

@@ -10,7 +10,6 @@ import { Validators } from './validators';
 import { VALIDATION_RESOLVERS } from './resolvers';
 import { defaultValueValidatorConfig } from './default-value-validator-config';
 import deepmerge = require('deepmerge');
-import { DeepPartial } from './types/deep-partial';
 
 export type ValueValidatorConfig<Context> = {
   errorMapping: ErrorMapping<Context>,
