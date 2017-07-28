@@ -1,6 +1,6 @@
 import { ValueValidatorConfig } from './create-value-validator';
 
-export const defaultValueValidatorConfig: ValueValidatorConfig = {
+export const defaultValueValidatorConfig: ValueValidatorConfig<{}> = {
   errorMapping: {
     inRange: {
       underMin: '',
@@ -19,5 +19,6 @@ export const defaultValueValidatorConfig: ValueValidatorConfig = {
       shorter: '',
       longer: ''
     }
-  }
+  },
+  context: {}
 };

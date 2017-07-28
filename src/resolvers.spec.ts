@@ -2,7 +2,7 @@ import { ErrorMessages } from './model';
 import { VALIDATION_RESOLVERS } from './resolvers';
 describe('Resolvers', () => {
   describe('required', () => {
-    const errorMessages: ErrorMessages<'required'> = {
+    const errorMessages: ErrorMessages<'required', {}> = {
       notDefined: 'notDefined'
     };
     const required = VALIDATION_RESOLVERS.required({errorMessages})({});
@@ -21,7 +21,7 @@ describe('Resolvers', () => {
   });
 
   describe('inRange', () => {
-    const errorMessages: ErrorMessages<'inRange'> = {
+    const errorMessages: ErrorMessages<'inRange', {}> = {
       underMin: 'underMin',
       overMax: 'overMax',
     };
@@ -50,7 +50,7 @@ describe('Resolvers', () => {
   });
 
   describe('isEmail', () => {
-    const errorMessages: ErrorMessages<'isEmail'> = {
+    const errorMessages: ErrorMessages<'isEmail', {}> = {
       notValid: 'notValid'
     };
     const isEmail = VALIDATION_RESOLVERS.isEmail({errorMessages})({});
@@ -82,7 +82,7 @@ describe('Resolvers', () => {
   });
 
   describe('isNumber', () => {
-    const errorMessages: ErrorMessages<'isNumber'> = {
+    const errorMessages: ErrorMessages<'isNumber', {}> = {
       notValid: 'notValid',
     };
     const isNumber = VALIDATION_RESOLVERS.isNumber({errorMessages})({});
@@ -103,7 +103,7 @@ describe('Resolvers', () => {
   });
 
   describe('hasLength', () => {
-    const errorMessages: ErrorMessages<'hasLength'> = {
+    const errorMessages: ErrorMessages<'hasLength', {}> = {
       shorter: 'shorter',
       longer: 'longer',
     };

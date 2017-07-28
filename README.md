@@ -58,8 +58,8 @@ const config: ValueValidatorConfig = {
       notValid: 'This field has to be a number'
     },
     inRange: {
-      underMin: ({params: {min}, meta: {name}}) => `The ${name} has to be at least ${min}.`,
-      overMax: ({params: {max}, meta: {name}}) => `The ${name} has to be smaller than ${max}.`
+      underMin: ({params: {min}, target: {name}}) => `The ${name} has to be at least ${min}.`,
+      overMax: ({params: {max}, target: {name}}) => `The ${name} has to be smaller than ${max}.`
     }
   }
 }

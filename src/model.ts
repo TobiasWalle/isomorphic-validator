@@ -1,17 +1,17 @@
 import { Validators } from './validators';
 
-export type ValidationResolverConfig<K extends keyof Validators> = {
-  errorMessages: ErrorMessages<K>
+export type ValidationResolverConfig<K extends keyof Validators, Context> = {
+  errorMessages: ErrorMessages<K, Context>
 };
 
-export type ValidationResolver<K extends keyof Validators> =
-  (params: Validators[K]['params']) => (value: Validators[K]['inputType']) => string | null;
+export type ValidationResolver<K extends keyof Validators, Context> =
+  (params: Validators[K]['params']) => (value: Validators[K]['inputType']) => ErrorMessage<K, Context> | null;
 
-export type ValidationResolverCreator<K extends keyof Validators> =
-  (config: ValidationResolverConfig<K>) => ValidationResolver<K>;
+export type ValidationResolverCreator<K extends keyof Validators, Context> =
+  (config: ValidationResolverConfig<K, Context>) => ValidationResolver<K, Context>;
 
-export type ValidationResolvers = {
-  [key in keyof Validators]: ValidationResolverCreator<key>
+export type ValidationResolvers<Context> = {
+  [key in keyof Validators]: ValidationResolverCreator<key, Context>
 };
 
 export type ValidationSchema = {
@@ -20,10 +20,16 @@ export type ValidationSchema = {
 
 export type Cases<K extends keyof Validators> = Validators[K]['cases'];
 
-export type ErrorMessages<K extends keyof Validators> = {[key in Cases<K>]: string};
+export type ValidationTarget<K extends keyof Validators> = {name: string, value: Validators[K]['inputType']};
+export type ErrorMessageFunction<K extends keyof Validators, Context> =
+  (args: {params: Validators[K]['params'], target: ValidationTarget<K>, context: Context}) => (string | Promise<string>);
+export type ErrorMessage<K extends keyof Validators, Context> = string | Promise<string> | ErrorMessageFunction<K, Context>;
+export type ErrorMessages<K extends keyof Validators, Context> =
+  {[key in Cases<K>]: ErrorMessage<K, Context>}
+;
 
-export type ErrorMapping = {
-  [key in keyof Validators]: ErrorMessages<key>
+export type ErrorMapping<Context> = {
+  [key in keyof Validators]: ErrorMessages<key, Context>
 };
 
 

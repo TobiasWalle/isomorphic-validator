@@ -1,7 +1,7 @@
 import { ValidationResolvers } from './model';
 import * as email from 'email-validation';
 
-export const VALIDATION_RESOLVERS: ValidationResolvers = {
+export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
   required: ({errorMessages}) => () => (value) => {
     if (value == null) {
       return errorMessages.notDefined;
