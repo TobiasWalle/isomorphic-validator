@@ -1,11 +1,11 @@
 {
   "name": "isomorphic-validator",
-  "version": "1.1.6",
+  "version": "1.1.8",
   "description": "Share the form validation on the server and client",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "./dist"
+    "dist/**/*"
   ],
   "repository": "git@github.com:TobiasWalle/isomorphic-validator.git",
   "author": "Tobias Walle",
