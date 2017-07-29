@@ -1,7 +1,22 @@
 import { VALIDATION_RESOLVERS } from './resolvers';
 import { ErrorMessages } from './error-mapping';
+import { Validators } from './validators';
 
 describe('Resolvers', () => {
+  it('should throw no error on null or undefined (except required)', () => {
+    const resolverKeys = Object.keys(VALIDATION_RESOLVERS).filter(key => key !== 'required');
+    expect.assertions(resolverKeys.length * 2);
+
+    resolverKeys.forEach((key: keyof Validators) => {
+      const resolver: any = VALIDATION_RESOLVERS[key];
+      const config: any = {};
+      const params: any = {};
+      const validate = resolver(config)(params);
+      expect(validate(null)).toBeNull();
+      expect(validate(undefined)).toBeNull();
+    });
+  });
+
   describe('required', () => {
     const errorMessages: ErrorMessages<'required', {}> = {
       notDefined: 'notDefined'

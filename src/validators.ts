@@ -1,6 +1,6 @@
 export interface Validators {
   inRange: {
-    inputType: number | undefined | null,
+    inputType: number
     params: {
       min: number,
       max: number,
@@ -13,17 +13,17 @@ export interface Validators {
     cases: 'notDefined'
   };
   isEmail: {
-    inputType: string | undefined | null,
+    inputType: string
     params: {},
     cases: 'notValid'
   };
   isNumber: {
-    inputType: number | undefined | null,
+    inputType: number
     params: {},
     cases: 'notValid'
   };
   hasLength: {
-    inputType: string | undefined | null,
+    inputType: string
     params: {
       min: number,
       max: number,
