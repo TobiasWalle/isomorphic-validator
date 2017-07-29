@@ -1,4 +1,19 @@
 export interface Validators {
+  required: {
+    inputType: any,
+    params: {},
+    cases: 'notDefined'
+  };
+  isNumber: {
+    inputType: number
+    params: {},
+    cases: 'notValid'
+  };
+  isEmail: {
+    inputType: string
+    params: {},
+    cases: 'notValid'
+  };
   inRange: {
     inputType: number
     params: {
@@ -6,21 +21,6 @@ export interface Validators {
       max: number,
     },
     cases: 'underMin' | 'overMax'
-  };
-  required: {
-    inputType: any,
-    params: {},
-    cases: 'notDefined'
-  };
-  isEmail: {
-    inputType: string
-    params: {},
-    cases: 'notValid'
-  };
-  isNumber: {
-    inputType: number
-    params: {},
-    cases: 'notValid'
   };
   hasLength: {
     inputType: string

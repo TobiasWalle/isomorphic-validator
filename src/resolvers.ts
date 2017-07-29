@@ -8,12 +8,10 @@ export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
     }
     return null;
   },
-  inRange: ({errorMessages}) => ({min, max}) => (value) => {
+  isNumber: ({errorMessages}) => ({}) => (value) => {
     if (value == null) return null;
-    if (value < min) {
-      return errorMessages.underMin;
-    } else if (value > max) {
-      return errorMessages.overMax;
+    if (isNaN(value) || typeof value !== 'number') {
+      return errorMessages.notValid;
     }
     return null;
   },
@@ -24,10 +22,12 @@ export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
     }
     return null;
   },
-  isNumber: ({errorMessages}) => ({}) => (value) => {
+  inRange: ({errorMessages}) => ({min, max}) => (value) => {
     if (value == null) return null;
-    if (isNaN(value) || typeof value !== 'number') {
-      return errorMessages.notValid;
+    if (value < min) {
+      return errorMessages.underMin;
+    } else if (value > max) {
+      return errorMessages.overMax;
     }
     return null;
   },
