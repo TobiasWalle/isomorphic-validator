@@ -21,11 +21,11 @@ export interface Validators {
     params: {},
     cases: 'notValid'
   };
-  //isUrl: {
-  //  inputType: string,
-  //  params: {},
-  //  cases: 'notValid'
-  //};
+  isUrl: {
+    inputType: string,
+    params: {},
+    cases: 'notValid'
+  };
   inRange: {
     inputType: number
     params: {

@@ -156,4 +156,21 @@ describe('Resolvers', () => {
       expect(matchRegex('Ae1344')).toBe('notValid');
     });
   });
+
+  describe('isUrl', () => {
+    const errorMessages: ErrorMessages<'isUrl', {}> = {
+      notValid: 'notValid'
+    };
+    const isUrl = VALIDATION_RESOLVERS.isUrl({errorMessages})({});
+    it('should detect valid inputs', () => {
+      expect(isUrl('http://google.de')).toBeNull();
+      expect(isUrl('https://google.de/search/something')).toBeNull();
+      expect(isUrl('https://google.de/search/something?query=1234')).toBeNull();
+      expect(isUrl('google.de')).toBeNull();
+    });
+    it('should detect invalid inputs', () => {
+      expect(isUrl('abc')).toBe('notValid');
+      expect(isUrl('https://test')).toBe('notValid');
+    });
+  });
 });

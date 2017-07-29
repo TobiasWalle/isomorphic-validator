@@ -50,4 +50,14 @@ export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
     }
     return null;
   },
+  isUrl: ({errorMessages}) => ({}) => (value) => {
+    if (value == null) return null;
+    /* tslint:disable:max-line-length */
+    const urlRegexp = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    /* tslint:enable:max-line-length */
+    if (!urlRegexp.test(value)) {
+      return errorMessages.notValid;
+    }
+    return null;
+  }
 };

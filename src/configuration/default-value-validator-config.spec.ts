@@ -8,9 +8,9 @@ describe('defaultValueValidatorConfig', () => {
 
   it('should have valid inRange error messages', async () => {
     const inRange = errorMapping.inRange;
-    expect(await getMessage(inRange.underMin, { params: {min: 10} }))
+    expect(await getMessage(inRange.underMin, {params: {min: 10}}))
       .toBe('Enter a number which has a minimum value of 10');
-    expect(await getMessage(inRange.overMax, { params: {max: 10} }))
+    expect(await getMessage(inRange.overMax, {params: {max: 10}}))
       .toBe('Enter a number which has a maximum value of 10');
   });
 
@@ -42,6 +42,12 @@ describe('defaultValueValidatorConfig', () => {
     const matchRegExp = errorMapping.matchRegExp;
     expect(await getMessage(matchRegExp.notValid, {target: {name: 'name'}}))
       .toBe('Enter a valid name');
+  });
+
+  it('should have valid isUrl error messages', async () => {
+    const isUrl = errorMapping.isUrl;
+    expect(await getMessage(isUrl.notValid, {}))
+      .toBe('Enter a valid URL');
   });
 });
 

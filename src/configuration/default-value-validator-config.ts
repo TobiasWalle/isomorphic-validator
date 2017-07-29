@@ -22,6 +22,9 @@ export const defaultValueValidatorConfig: ValueValidatorConfig<{}> = {
     },
     matchRegExp: {
       notValid: ({target: {name}}) => `Enter a valid ${name}`
+    },
+    isUrl: {
+      notValid: 'Enter a valid URL'
     }
   },
   context: {}
