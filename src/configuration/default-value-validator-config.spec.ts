@@ -1,6 +1,6 @@
 import { defaultValueValidatorConfig } from './default-value-validator-config';
-import { resolveErrorMessage } from './create-value-validator';
-import { ErrorMessage, ValidationTarget } from './error-mapping';
+import { resolveErrorMessage } from '../create-value-validator';
+import { ErrorMessage, ValidationTarget } from '../model/error-mapping.model';
 import { Validators } from './validators';
 
 describe('defaultValueValidatorConfig', () => {
@@ -38,6 +38,11 @@ describe('defaultValueValidatorConfig', () => {
       .toBe('Use a maximum of 3 characters');
   });
 
+  it('should have valid matchRegExp error messages', async () => {
+    const matchRegExp = errorMapping.matchRegExp;
+    expect(await getMessage(matchRegExp.notValid, {target: {name: 'name'}}))
+      .toBe('Enter a valid name');
+  });
 });
 
 // Helper method for testing the messages

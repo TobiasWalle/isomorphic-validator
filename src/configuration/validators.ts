@@ -4,6 +4,13 @@ export interface Validators {
     params: {},
     cases: 'notDefined'
   };
+  matchRegExp: {
+    inputType: string,
+    params: {
+      pattern: string
+    },
+    cases: 'notValid'
+  };
   isNumber: {
     inputType: number
     params: {},
@@ -14,6 +21,11 @@ export interface Validators {
     params: {},
     cases: 'notValid'
   };
+  //isUrl: {
+  //  inputType: string,
+  //  params: {},
+  //  cases: 'notValid'
+  //};
   inRange: {
     inputType: number
     params: {
@@ -30,4 +42,12 @@ export interface Validators {
     },
     cases: 'shorter' | 'longer'
   };
+  //isInList: {
+  //  inputType: any,
+  //  params: {
+  //    list: any[],
+  //    listName: string
+  //  },
+  //  cases: 'notInList'
+  //};
 }

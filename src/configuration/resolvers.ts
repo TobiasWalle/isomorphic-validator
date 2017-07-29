@@ -1,5 +1,6 @@
-import { ValidationResolvers } from './model';
+import { ValidationResolvers } from '../model/validation-resolver.model';
 import * as email from 'email-validation';
+import { convertStringToRegExp } from '../utils/regex.utils';
 
 export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
   required: ({errorMessages}) => () => (value) => {
@@ -40,5 +41,13 @@ export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
       return errorMessages.longer;
     }
     return null;
-  }
+  },
+  matchRegExp: ({errorMessages}) => ({pattern}) => (value) => {
+    if (value == null) return null;
+    const regExp: RegExp = convertStringToRegExp(pattern);
+    if (!regExp.test(value)) {
+      return errorMessages.notValid;
+    }
+    return null;
+  },
 };

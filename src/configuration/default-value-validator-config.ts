@@ -1,5 +1,5 @@
-import { ValueValidatorConfig } from './create-value-validator';
-import { capitalizeFirstLetter, pluralize } from './format.utils';
+import { ValueValidatorConfig } from '../create-value-validator';
+import { capitalizeFirstLetter, pluralize } from '../utils/format.utils';
 
 export const defaultValueValidatorConfig: ValueValidatorConfig<{}> = {
   errorMapping: {
@@ -19,6 +19,9 @@ export const defaultValueValidatorConfig: ValueValidatorConfig<{}> = {
     hasLength: {
       shorter: ({params: {min}}) => `Use at least ${min} ${pluralize(min, 'character')}`,
       longer: ({params: {max}}) => `Use a maximum of ${max} ${pluralize(max, 'character')}`
+    },
+    matchRegExp: {
+      notValid: ({target: {name}}) => `Enter a valid ${name}`
     }
   },
   context: {}

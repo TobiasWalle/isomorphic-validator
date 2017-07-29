@@ -1,4 +1,4 @@
-import { Validators } from './validators';
+import { Validators } from '../configuration/validators';
 
 export type Cases<K extends keyof Validators> = Validators[K]['cases'];
 

@@ -1,9 +1,9 @@
-import { ValidationResolverConfig, ValidationResolverCreator } from './model';
-import { ErrorMapping, ErrorMessageFunction, ValidationTarget } from './error-mapping';
-import { ValidationSchema } from './validation-schema';
-import { Validators } from './validators';
-import { VALIDATION_RESOLVERS } from './resolvers';
-import { defaultValueValidatorConfig } from './default-value-validator-config';
+import { ValidationResolverConfig, ValidationResolverCreator } from './model/validation-resolver.model';
+import { ErrorMapping, ErrorMessageFunction, ValidationTarget } from './model/error-mapping.model';
+import { ValidationSchema } from './model/validation-schema.model';
+import { Validators } from './configuration/validators';
+import { VALIDATION_RESOLVERS } from './configuration/resolvers';
+import { defaultValueValidatorConfig } from './configuration/default-value-validator-config';
 import deepmerge = require('deepmerge');
 
 export type ValueValidatorConfig<Context> = {

@@ -1,5 +1,5 @@
 import { VALIDATION_RESOLVERS } from './resolvers';
-import { ErrorMessages } from './error-mapping';
+import { ErrorMessages } from '../model/error-mapping.model';
 import { Validators } from './validators';
 
 describe('Resolvers', () => {
@@ -135,6 +135,25 @@ describe('Resolvers', () => {
     it('should detect invalid strings', () => {
       expect(hasLength('1234')).toBe('shorter');
       expect(hasLength('12345689101')).toBe('longer');
+    });
+  });
+
+  describe('matchRegExp', () => {
+    const errorMessages: ErrorMessages<'matchRegExp', {}> = {
+      notValid: 'notValid'
+    };
+    const matchRegex = VALIDATION_RESOLVERS.matchRegExp({errorMessages})({
+      //language=RegExp
+      pattern: '/^[ABC]{2}\\d+$/i'
+    });
+    it('should detect valid inputs', () => {
+      expect(matchRegex('ab123')).toBeNull();
+      expect(matchRegex('Cb3')).toBeNull();
+    });
+    it('should detect invalid inputs', () => {
+      expect(matchRegex('a123')).toBe('notValid');
+      expect(matchRegex('ac')).toBe('notValid');
+      expect(matchRegex('Ae1344')).toBe('notValid');
     });
   });
 });

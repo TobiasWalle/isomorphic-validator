@@ -1,5 +1,5 @@
-import { Validators } from './validators';
-import { ErrorMessage, ErrorMessages } from './error-mapping';
+import { Validators } from '../configuration/validators';
+import { ErrorMessage, ErrorMessages } from './error-mapping.model';
 
 export type ValidationResolverConfig<K extends keyof Validators, Context> = {
   errorMessages: ErrorMessages<K, Context>
