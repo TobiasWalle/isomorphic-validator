@@ -3,7 +3,7 @@ import * as email from 'email-validation';
 
 export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
   required: ({errorMessages}) => () => (value) => {
-    if (value == null) {
+    if (value == null || value === '') {
       return errorMessages.notDefined;
     }
     return null;

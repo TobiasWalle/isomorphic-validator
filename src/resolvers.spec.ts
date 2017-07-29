@@ -8,9 +8,10 @@ describe('Resolvers', () => {
     };
     const required = VALIDATION_RESOLVERS.required({errorMessages})({});
 
-    it('should return error if input is null', () => {
+    it('should return error if input is null or empty', () => {
       expect(required(null)).toBe(errorMessages.notDefined);
       expect(required(undefined)).toBe(errorMessages.notDefined);
+      expect(required('')).toBe(errorMessages.notDefined);
     });
 
     it('should return undefined if value is valid', () => {
