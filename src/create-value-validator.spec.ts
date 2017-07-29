@@ -7,7 +7,7 @@ import {
 
 describe('CreateValueValidator', () => {
   let config: PartialValueValidatorConfig<{}>;
-  let valueValidator: ValueValidatorWithoutSchema<never>;
+  let valueValidator: ValueValidatorWithoutSchema<string>;
 
   beforeEach(() => {
     config = {
@@ -62,21 +62,35 @@ describe('CreateValueValidator', () => {
     expect(result).toEqual({});
   });
 
+  it('should find missing required inputs', async () => {
+    type Keys = 'a' | 'b';
+    const schema: ValueSchemaMapping<Keys> = {
+      a: {
+        required: {}
+      },
+      b: {},
+    };
+    const result = await valueValidator(schema)({
+      b: 300,
+    });
+    expect((result.a || {}).required).toBeDefined();
+  });
+
   it('should work with messages which are function', async () => {
     expect.assertions(5);
     config = {
-        errorMapping: {
-          inRange: {
-            underMin: ({params: {min, max}, target: {name, value}}) => {
-              expect(min).toBe(0);
-              expect(max).toBe(10);
-              expect(name).toBe('a');
-              expect(value).toBe(-10);
-              return 'underMin';
-            },
-            overMax: 'overMax'
-          }
+      errorMapping: {
+        inRange: {
+          underMin: ({params: {min, max}, target: {name, value}}) => {
+            expect(min).toBe(0);
+            expect(max).toBe(10);
+            expect(name).toBe('a');
+            expect(value).toBe(-10);
+            return 'underMin';
+          },
+          overMax: 'overMax'
         }
+      }
     };
     type Keys = 'a';
     const schema: ValueSchemaMapping<Keys> = {
@@ -100,18 +114,18 @@ describe('CreateValueValidator', () => {
   it('should work with messages which are asnyc function', async () => {
     expect.assertions(5);
     config = {
-        errorMapping: {
-          inRange: {
-            underMin: async ({params: {min, max}, target: {name, value}}) => {
-              expect(min).toBe(0);
-              expect(max).toBe(10);
-              expect(name).toBe('a');
-              expect(value).toBe(-10);
-              return 'underMin';
-            },
-            overMax: 'overMax'
-          }
+      errorMapping: {
+        inRange: {
+          underMin: async ({params: {min, max}, target: {name, value}}) => {
+            expect(min).toBe(0);
+            expect(max).toBe(10);
+            expect(name).toBe('a');
+            expect(value).toBe(-10);
+            return 'underMin';
+          },
+          overMax: 'overMax'
         }
+      }
     };
     type Keys = 'a';
     const schema: ValueSchemaMapping<Keys> = {
@@ -135,12 +149,12 @@ describe('CreateValueValidator', () => {
   it('should work with messages which are promises', async () => {
     expect.assertions(1);
     config = {
-        errorMapping: {
-          inRange: {
-            underMin: Promise.resolve('underMin'),
-            overMax: 'overMax'
-          }
+      errorMapping: {
+        inRange: {
+          underMin: Promise.resolve('underMin'),
+          overMax: 'overMax'
         }
+      }
     };
     type Keys = 'a';
     const schema: ValueSchemaMapping<Keys> = {
@@ -164,12 +178,12 @@ describe('CreateValueValidator', () => {
   it('should throw error if message type is invalid', async () => {
     expect.assertions(1);
     config = {
-        errorMapping: {
-          inRange: {
-            underMin: 123,
-            overMax: 'overMax'
-          }
+      errorMapping: {
+        inRange: {
+          underMin: 123,
+          overMax: 'overMax'
         }
+      }
     } as any;
     type Keys = 'a';
     const schema: ValueSchemaMapping<Keys> = {

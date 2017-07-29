@@ -83,7 +83,7 @@ export const createValueValidator = <K extends string, Context>
     (config: PartialValueValidatorConfig<Context>): ValueValidatorWithoutSchema<K> => {
     const configuration = mergeConfigs(defaultValueValidatorConfig, config);
     return (schemaMapping) => (obj) =>
-      Object.keys(obj)
+      getUniqueArray(Object.keys(obj).concat(Object.keys(schemaMapping)))
         .map(key => [key, obj[key], schemaMapping[key]])
         .filter(([key, value, schema]) => schema != null)
         .reduce(async (resultPromise: Promise<ValidationResultMapping<K>>, [key, value, schema]) => {
@@ -116,3 +116,10 @@ function mergeConfigs<Context>(
   };
 }
 
+function getUniqueArray<T>(list: T[]): T[] {
+  const set: Set<T> = new Set();
+  list.forEach(v => {
+    set.add(v);
+  });
+  return Array.from(set);
+}
