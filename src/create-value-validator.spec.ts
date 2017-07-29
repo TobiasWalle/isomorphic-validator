@@ -185,7 +185,7 @@ describe('CreateValueValidator', () => {
         a: -10
       });
     } catch (err) {
-      expect(err.message).toBe('Invalid error message type "number"');
+      expect(err.message).toBe('Invalid error message type "number": 123');
     }
   });
 });

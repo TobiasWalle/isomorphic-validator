@@ -1,7 +1,4 @@
-import {
-  ValidationResolverConfig,
-  ValidationResolverCreator,
-} from './model';
+import { ValidationResolverConfig, ValidationResolverCreator } from './model';
 import { ErrorMapping, ErrorMessageFunction, ValidationTarget } from './error-mapping';
 import { ValidationSchema } from './validation-schema';
 import { Validators } from './validators';
@@ -11,36 +8,41 @@ import deepmerge = require('deepmerge');
 
 export type ValueValidatorConfig<Context> = {
   errorMapping: ErrorMapping<Context>,
-  context?: Context
+  context: Context
 };
 export type PartialValueValidatorConfig<Context> = {
-  [k in keyof ValueValidatorConfig<Context>]: Partial<ValueValidatorConfig<Context>[k]>
+  [k in keyof ValueValidatorConfig<Context>]?: Partial<ValueValidatorConfig<Context>[k]>
 };
 export type ValueSchemaMapping<K extends string> = {[key in K]?: ValidationSchema};
 export type ValidationResult = {[V in keyof Validators]?:  string | undefined};
 export type ValidationResultMapping<K extends string> = {[key in K]?: ValidationResult};
 
-const resolveErrorMessage = async <K extends keyof Validators, Context>
+const resolveErrorMessage = async<K extends keyof Validators, Context>
   ({errorMessage, params, target, context}: {
     errorMessage: string | Promise<string> | ErrorMessageFunction<K, Context>,
     params: Validators[K]['params'],
     target: ValidationTarget<K>,
     context: Context
   }): Promise<string> => {
-    if (typeof errorMessage === 'string' || errorMessage instanceof Promise) {
-      return errorMessage;
-    } else if (typeof errorMessage === 'function') {
-      errorMessage = errorMessage({params, target, context});
-      if (errorMessage instanceof Promise) {
-        errorMessage = await errorMessage;
-      }
-      return errorMessage;
-    } else {
-      throw ReferenceError('Invalid error message type "' + typeof errorMessage + '"');
-    }
-  };
+  if (typeof errorMessage === 'function') {
+    errorMessage = errorMessage({params, target, context});
+  }
 
-const validateSchema = async <K extends keyof Validators, Context>
+  if (typeof errorMessage === 'string' || isPromise<string>(errorMessage)) {
+    return errorMessage;
+  } else {
+
+    let serializedErrorMessage: string;
+    try {
+      serializedErrorMessage = JSON.stringify(errorMessage);
+    } catch (err) {
+      serializedErrorMessage = '' + errorMessage;
+    }
+    throw ReferenceError(`Invalid error message type "${typeof errorMessage}": ${serializedErrorMessage}`);
+  }
+};
+
+const validateSchema = async<K extends keyof Validators, Context>
   ({config, value, schema, name}: {
     config: ValueValidatorConfig<Context>,
     value: any,
@@ -69,7 +71,7 @@ const validateSchema = async <K extends keyof Validators, Context>
 };
 
 const getResolverConfig = <K extends keyof Validators, Context>
-(config: ValueValidatorConfig<Context>, key: K): ValidationResolverConfig<K, Context> => {
+  (config: ValueValidatorConfig<Context>, key: K): ValidationResolverConfig<K, Context> => {
   const errorMessages = config.errorMapping[key] as any;
   return {
     errorMessages
@@ -80,24 +82,39 @@ export type ValueValidator<K extends string> = (obj: {[key in K]: any}) => Promi
 export type ValueValidatorWithoutSchema<K extends string> = (schemaMapping: ValueSchemaMapping<K>) => ValueValidator<K>;
 
 export const createValueValidator = <K extends string, Context>
-  (config: PartialValueValidatorConfig<Context>): ValueValidatorWithoutSchema<K> => {
-    const configuration = deepmerge(defaultValueValidatorConfig, config) as ValueValidatorConfig<Context>;
+    (config: PartialValueValidatorConfig<Context>): ValueValidatorWithoutSchema<K> => {
+    const configuration = mergeConfigs(defaultValueValidatorConfig, config);
     return (schemaMapping) => (obj) =>
-        Object.keys(obj)
-          .map(key => [key, obj[key], schemaMapping[key]])
-          .filter(([key, value, schema]) => schema != null)
-          .reduce(async (resultPromise: Promise<ValidationResultMapping<K>>, [key, value, schema]) => {
-            const result = await resultPromise;
-            const schemaResult = await validateSchema({
-              config: configuration,
-              value,
-              schema,
-              name: key,
-            });
-            if (Object.keys(schemaResult).length > 0) {
-              result[key] = schemaResult;
-            }
-            return result;
-          }, Promise.resolve({}));
+      Object.keys(obj)
+        .map(key => [key, obj[key], schemaMapping[key]])
+        .filter(([key, value, schema]) => schema != null)
+        .reduce(async (resultPromise: Promise<ValidationResultMapping<K>>, [key, value, schema]) => {
+          const result = await resultPromise;
+          const schemaResult = await validateSchema({
+            config: configuration,
+            value,
+            schema,
+            name: key,
+          });
+          if (Object.keys(schemaResult).length > 0) {
+            result[key] = schemaResult;
+          }
+          return result;
+        }, Promise.resolve({}));
   }
 ;
+
+function isPromise<T>(obj: any): obj is Promise<T> {
+  return (typeof obj === 'object') && obj['then'] != null;
+}
+
+function mergeConfigs<Context>(
+  defaultConfig: ValueValidatorConfig<Context>,
+  customConfig: PartialValueValidatorConfig<Context> = {}
+): ValueValidatorConfig<Context> {
+  return {
+    errorMapping: Object.assign({}, defaultConfig.errorMapping, customConfig.errorMapping || {}) as any,
+    context: deepmerge(defaultConfig.context, customConfig.context || {}) as any,
+  };
+}
+
