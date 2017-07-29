@@ -17,7 +17,7 @@ export type ValueSchemaMapping<K extends string> = {[key in K]?: ValidationSchem
 export type ValidationResult = {[V in keyof Validators]?:  string | undefined};
 export type ValidationResultMapping<K extends string> = {[key in K]?: ValidationResult};
 
-const resolveErrorMessage = async<K extends keyof Validators, Context>
+export const resolveErrorMessage = async<K extends keyof Validators, Context>
   ({errorMessage, params, target, context}: {
     errorMessage: string | Promise<string> | ErrorMessageFunction<K, Context>,
     params: Validators[K]['params'],
@@ -27,11 +27,9 @@ const resolveErrorMessage = async<K extends keyof Validators, Context>
   if (typeof errorMessage === 'function') {
     errorMessage = errorMessage({params, target, context});
   }
-
   if (typeof errorMessage === 'string' || isPromise<string>(errorMessage)) {
     return errorMessage;
   } else {
-
     let serializedErrorMessage: string;
     try {
       serializedErrorMessage = JSON.stringify(errorMessage);

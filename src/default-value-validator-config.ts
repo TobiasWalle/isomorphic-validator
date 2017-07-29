@@ -1,23 +1,24 @@
 import { ValueValidatorConfig } from './create-value-validator';
+import { capitalizeFirstLetter, pluralize } from './format.utils';
 
 export const defaultValueValidatorConfig: ValueValidatorConfig<{}> = {
   errorMapping: {
     inRange: {
-      underMin: '',
-      overMax: ''
+      underMin: ({params: {min}}) => `Enter a number which has a minimum value of ${min}`,
+      overMax: ({params: {max}}) => `Enter a number which has a maximum value of ${max}`,
     },
     required: {
-      notDefined: ''
+      notDefined: ({target: {name}}) => `${capitalizeFirstLetter(name)} is required`,
     },
     isEmail: {
-      notValid: ''
+      notValid: 'Enter a valid email',
     },
     isNumber: {
-      notValid: ''
+      notValid: 'Enter a valid number'
     },
     hasLength: {
-      shorter: '',
-      longer: ''
+      shorter: ({params: {min}}) => `Use at least ${min} ${pluralize(min, 'character')}`,
+      longer: ({params: {max}}) => `Use a maximum of ${max} ${pluralize(max, 'character')}`
     }
   },
   context: {}
