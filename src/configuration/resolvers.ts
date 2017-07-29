@@ -59,5 +59,12 @@ export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
       return errorMessages.notValid;
     }
     return null;
+  },
+  isInList: ({errorMessages}) => ({list}) => (value) => {
+    if (value == null) return null;
+    if (!list.includes(value)) {
+      return errorMessages.notInList;
+    }
+    return null;
   }
 };

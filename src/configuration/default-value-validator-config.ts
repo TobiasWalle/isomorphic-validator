@@ -25,6 +25,9 @@ export const defaultValueValidatorConfig: ValueValidatorConfig<{}> = {
     },
     isUrl: {
       notValid: 'Enter a valid URL'
+    },
+    isInList: {
+      notInList: ({target: {name}}) => `Enter a valid ${name}`
     }
   },
   context: {}

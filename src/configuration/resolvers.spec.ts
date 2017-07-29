@@ -173,4 +173,23 @@ describe('Resolvers', () => {
       expect(isUrl('https://test')).toBe('notValid');
     });
   });
+
+  describe('isInList', () => {
+    const errorMessages: ErrorMessages<'isInList', {}> = {
+      notInList: 'notInList'
+    };
+    const isInList = VALIDATION_RESOLVERS.isInList({errorMessages})({
+      list: [1, 2, 3]
+    });
+    it('should detect valid inputs', () => {
+      expect(isInList(1)).toBeNull();
+      expect(isInList(2)).toBeNull();
+      expect(isInList(3)).toBeNull();
+    });
+    it('should detect invalid inputs', () => {
+      expect(isInList(4)).toBe('notInList');
+      expect(isInList(0)).toBe('notInList');
+      expect(isInList(-1)).toBe('notInList');
+    });
+  })
 });

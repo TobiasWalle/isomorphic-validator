@@ -49,6 +49,12 @@ describe('defaultValueValidatorConfig', () => {
     expect(await getMessage(isUrl.notValid, {}))
       .toBe('Enter a valid URL');
   });
+
+  it('should have valid isInList error messages', async () => {
+    const isInList = errorMapping.isInList;
+    expect(await getMessage(isInList.notInList, {target: {name: 'name'}}))
+      .toBe('Enter a valid name');
+  });
 });
 
 // Helper method for testing the messages

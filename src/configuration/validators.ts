@@ -42,12 +42,11 @@ export interface Validators {
     },
     cases: 'shorter' | 'longer'
   };
-  //isInList: {
-  //  inputType: any,
-  //  params: {
-  //    list: any[],
-  //    listName: string
-  //  },
-  //  cases: 'notInList'
-  //};
+  isInList: {
+    inputType: any,
+    params: {
+      list: any[],
+    },
+    cases: 'notInList'
+  };
 }
