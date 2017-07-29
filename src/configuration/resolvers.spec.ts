@@ -191,5 +191,5 @@ describe('Resolvers', () => {
       expect(isInList(0)).toBe('notInList');
       expect(isInList(-1)).toBe('notInList');
     });
-  })
+  });
 });
