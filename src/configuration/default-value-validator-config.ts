@@ -17,8 +17,8 @@ export const defaultValueValidatorConfig: ValueValidatorConfig<{}> = {
       notValid: 'Enter a valid number'
     },
     hasLength: {
-      shorter: ({params: {min}}) => `Use at least ${min} ${pluralize(min, 'character')}`,
-      longer: ({params: {max}}) => `Use a maximum of ${max} ${pluralize(max, 'character')}`
+      shorter: ({params: {min}}) => min != null ? `Use at least ${min} ${pluralize(min, 'character')}` : '',
+      longer: ({params: {max}}) => max != null ? `Use a maximum of ${max} ${pluralize(max, 'character')}` : '',
     },
     matchRegExp: {
       notValid: ({target: {name}}) => `Enter a valid ${name}`

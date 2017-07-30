@@ -25,9 +25,9 @@ export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
   },
   inRange: ({errorMessages}) => ({min, max}) => (value) => {
     if (value == null) return null;
-    if (value < min) {
+    if (min != null && value < min) {
       return errorMessages.underMin;
-    } else if (value > max) {
+    } else if (max != null && value > max) {
       return errorMessages.overMax;
     }
     return null;
@@ -35,9 +35,9 @@ export const VALIDATION_RESOLVERS: ValidationResolvers<any> = {
   hasLength: ({errorMessages}) => ({min, max}) => (value) => {
     if (value == null) return null;
     const length = value.length;
-    if (length < min) {
+    if (min != null && length < min) {
       return errorMessages.shorter;
-    } else if (length > max) {
+    } else if (max != null && length > max) {
       return errorMessages.longer;
     }
     return null;

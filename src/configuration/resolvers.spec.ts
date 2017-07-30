@@ -42,7 +42,7 @@ describe('Resolvers', () => {
       underMin: 'underMin',
       overMax: 'overMax',
     };
-    const inRange = VALIDATION_RESOLVERS.inRange({errorMessages})({
+    let inRange = VALIDATION_RESOLVERS.inRange({errorMessages})({
       min: -10,
       max: 10,
     });
@@ -63,6 +63,21 @@ describe('Resolvers', () => {
       expect(inRange(11)).toBe(errorMessages.overMax);
       expect(inRange(10.000012)).toBe(errorMessages.overMax);
       expect(inRange(Infinity)).toBe(errorMessages.overMax);
+    });
+
+    it('should work with only min', () => {
+      inRange = VALIDATION_RESOLVERS.inRange({errorMessages})({
+        min: -10,
+      });
+      expect(inRange(-11)).toBe(errorMessages.underMin);
+      expect(inRange(1000000000)).toBeNull();
+    });
+    it('should work with only max', () => {
+      inRange = VALIDATION_RESOLVERS.inRange({errorMessages})({
+        max: -10,
+      });
+      expect(inRange(-11)).toBeNull();
+      expect(inRange(1000000000)).toBe(errorMessages.overMax);
     });
   });
 
@@ -124,7 +139,7 @@ describe('Resolvers', () => {
       shorter: 'shorter',
       longer: 'longer',
     };
-    const hasLength = VALIDATION_RESOLVERS.hasLength({errorMessages})({
+    let hasLength = VALIDATION_RESOLVERS.hasLength({errorMessages})({
       min: 5,
       max: 10
     });
@@ -135,6 +150,20 @@ describe('Resolvers', () => {
     it('should detect invalid strings', () => {
       expect(hasLength('1234')).toBe('shorter');
       expect(hasLength('12345689101')).toBe('longer');
+    });
+    it('should work with only min', () => {
+      hasLength = VALIDATION_RESOLVERS.hasLength({errorMessages})({
+        min: 5
+      });
+      expect(hasLength('123')).toBe('shorter');
+      expect(hasLength('1234565')).toBeNull();
+    });
+    it('should work with only max', () => {
+      hasLength = VALIDATION_RESOLVERS.hasLength({errorMessages})({
+        max: 5
+      });
+      expect(hasLength('123')).toBeNull();
+      expect(hasLength('1234565')).toBe('longer');
     });
   });
 

@@ -29,16 +29,16 @@ export interface Validators {
   inRange: {
     inputType: number
     params: {
-      min: number,
-      max: number,
+      min?: number,
+      max?: number,
     },
     cases: 'underMin' | 'overMax'
   };
   hasLength: {
     inputType: string
     params: {
-      min: number,
-      max: number,
+      min?: number,
+      max?: number,
     },
     cases: 'shorter' | 'longer'
   };
